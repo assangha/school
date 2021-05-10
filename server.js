@@ -135,11 +135,12 @@ app.use((req, res) => {
 });
 
 // setup http server to listen on HTTP_PORT
-lgn.initialize().then(function(result){
-    serverStart();
+/*
+lgn.initialize().then(function(result){*/
+    serverStart();/*
 }).catch(function(rmsg){
     console.log(rmsg);
-});
+});*/
 
 //function to start server
 function serverStart(){
