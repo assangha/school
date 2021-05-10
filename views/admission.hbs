@@ -1,0 +1,71 @@
+<h2>Admission Form</h2>
+<div class ="frm">
+    <form name="admission" method ="post" action= "admission" autocomplete="on" enctype="multipart/form-data">
+    <br>
+        <b>General Information</b><br><br>
+            <div class="line">Name: </div><div class = "line1"><input type="text" name = "name" id="name" required></div><br><br>
+            <div class="line">Father Name: </div><div class = "line1"><input type="text" name = "Father_name" id="father_name" required></div><br><br>
+            <div class="line">Mother Name: </div><div class = "line1"><input type="text" name = "Mother_name" id="Mother_name" required></div><br><br>
+            <div class="line">Date of Birth: </div><div class = "line1"><input type="date" name = "DOB" id="DOB" required></div><br><br>
+            <div class="line">Height(in cm): </div><div class = "line1"><input type="number" name = "Height" id="Height" required></div><br><br>
+            <div class="line">Weight(in kg): </div><div class = "line1"><input type="number" name = "Weight" id="Weight" required></div><br><br>
+            <div class="line">Gender: </div><div class = "line1"><select id="gender" name="gender">
+                <option value="Male">male</option>
+                <option value="Female" selected>Female</option>
+                <option value="other">Other</option>
+            </select></div><br><br>
+            <div class="line">Nationality: </div><div class = "line1"><input type="text" name = "Nationality" id="Nationality" required></div><br><br>
+            <div class="line">Religion: </div><div class = "line1"><input type="text" name = "Religion" id="Religion" required></div><br><br>
+            <div class="line">Caste: </div><div class = "line1"><select id="Caste" name="Caste">
+                <option value="SC">SC</option>
+                <option value="ST">ST</option>
+                <option value="OBC">OBC</option>
+                <option value="GEN">GEN</option>
+            </select></div><br><br>
+            <div class="line">Adhaar Number: </div><div class = "line1"><input type="text" name = "Adhaar" id="Adhaar" required></div><br><br>
+            <div class="line">Address: </div><div class = "line1"><input type="text" name = "Address" id="Address" required></div><br><br>
+            <div class="line">Mobile No.: </div><div class = "line1"><input type="text" name = "Mobile" id="Mobile" required></div><br><br>
+            <div class="line">Email: </div><div class = "line1"><input type="text" name = "Email" id="Email" required></div><br><br>
+            <div class="line">Previous Class: </div><div class = "line1"><input type="text" name = "Previous_Class" id="Previous_Class" required></div><br><br>
+            <div class="line">Previous School: </div><div class = "line1"><input type="text" name = "Previous_School" id="Previous_School" required></div><br><br>
+            <div class="line">Previous Board: </div><div class = "line1"><input type="text" name = "Previous_Board" id="Previous_Board" required></div><br><br>
+            <div class="line">Medium of Study: </div><div class = "line1"><input type="text" name = "Medium_of_study" id="Medium_of_study" required></div><br><br>
+            <div class="line">Admission Required in which class: </div><div class = "line1"><select id="Admission" name="Admission">
+                <option value="VI">VI</option>
+                <option value="VII">VII</option>
+                <option value="VIII">VIII</option>
+                <option value="IX">IX</option>
+                <option value="X" >X</option>
+                <option value="XI" >XI</option>
+                <option value="XII" >XII</option>
+            </select></div><br><br><br>
+            <div class="line">Stream: </div><div class = "line1"><select id="Stream" name="Stream">
+                <option value="Electronics">Electronics</option>
+                <option value="Garment Technology">Garment Technology</option>
+                <option value="Vocational Computer">Vocational Computer</option>
+                <option value="Food Preservation">Food Preservation</option>
+                <option value="N/A" selected >N/A</option>
+            </select></div><br><br>
+        <b>Siblings Studying in this School</b><br>(Write N/A if none)<br><br>
+            <div class="line">Name: </div><div class = "line1"><input type="text" name = "Sibling_name" id="Sibling_name" required></div><br><br>
+            <div class="line">Class: </div><div class = "line1"><input type="text" name = "Sibling_class" id="Sibling_class" required></div><br><br>
+        <b>Banking Details</b><br><br>
+            <div class="line">Account Number: </div><div class = "line1"><input type="text" name = "account_number" id="account_number" required></div><br><br>
+            <div class="line">Full Name of Account Holder: </div><div class = "line1"><input type="text" name = "account_name" id="account_name" required></div><br><br><br>
+            <div class="line">Bank Name: </div><div class = "line1"><input type="text" name = "Bank_name" id="Bank_name" required></div><br><br>
+            <div class="line">Branch name: </div><div class = "line1"><input type="text" name = "Branch_name" id="Branch_name" required></div><br><br>
+            <div class="line">IFSC code: </div><div class = "line1"><input type="text" name = "IFSC_code" id="IFSC_code" required></div><br><br>
+        <b>Required Documents</b><br><br>
+            <div class="line">Photo of Candidate: </div><div class = "line1"><input type="file" name ="photo" id="photo" required></div><br><br>
+            <div class="line">Sign of Candidate: </div><div class = "line1"><input type="file" name ="Sign" id="Sign" required></div><br><br>
+            <div class="line">Sign/Thumb of Parent: </div><div class = "line1"><input type="file" name ="Paretn_Sign" id="parent_sign" required></div><br><br>
+            <div class="line">Adhaar Card: </div><div class = "line1"><input type="file" name ="adhaar" id="adhaar" required></div><br><br>
+            <div class="line">Birth Cirtificate: </div><div class = "line1"><input type="file" name ="birth_certificate" id="birth_certificate" required></div><br><br>
+            <div class="line">First page of bank passbook: </div><div class = "line1"><input type="file" name ="passbook" id="passbook" required></div><br><br><br>
+            <div class="line">Previous school School leaving certificate (SLC or Transfer certificates): </div><div class = "line1"><input type="file" name ="school_certificate" id="school_certificate" required></div><br><br><br><br>
+            <div class="line">Caste certificate (if caste is other than Gen.): </div><div class = "line1"><input type="file" name = "caste_certificate" id="caste_certificate" ></div><br><br>
+        <br><br>
+            <input type="submit" value ="Submit" STYLE="color: #FFFDD0; font-size: 15px; background-color: #B70003; border: solid #B70003;"> &nbsp;&nbsp;&nbsp;
+            <input type = "reset" value ="Reset" STYLE="color: #FFFDD0; font-size: 15px; background-color: #B70003; border: solid #B70003;"><br>
+    </form>
+</div>
