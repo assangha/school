@@ -101,6 +101,26 @@ app.get("/office", (req, res) => {
     });
 });
 
+app.get("/register", (req, res) => {
+    res.render('register', {
+        //data: someData,
+    });
+});
+
+app.post("/office",(req, res) => {
+    lgn.signup(req.body).then(function(user){
+        
+        res.redirect('/office');
+        
+        //res.send(user);
+    }).catch(function(err){
+        res.render('register', {
+            errorMessage: err
+        });
+    });
+//    res.send(req.body);
+});
+
 var usr;
 
 app.post("/office",(req, res) => {
@@ -135,12 +155,12 @@ app.use((req, res) => {
 });
 
 // setup http server to listen on HTTP_PORT
-/*
-lgn.initialize().then(function(result){*/
-    serverStart();/*
+
+lgn.initialize().then(function(result){
+    serverStart();
 }).catch(function(rmsg){
     console.log(rmsg);
-});*/
+});
 
 //function to start server
 function serverStart(){

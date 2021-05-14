@@ -1,0 +1,22 @@
+<h2>Sign Up</h2>
+<br><br>
+{{#if errorMessage}}
+    <div class="alert alert-danger">
+        <strong>Error: </strong> {{errorMessage}}
+    </div>
+{{/if}}
+
+
+<div class ="frm1">
+    <form name="register" method ="post" action= "/register" autocomplete="on">
+    <br><br>
+        <div class="line2">Enter full name: </div><div class = "line3"><input type="text" name = "fName" id="fName" required></div><br><br>
+        <div class="line2">User Name: </div><div class = "line3"><input type="text" name = "userName" id="userName" required></div><br><br>
+        <div class="line2">Password: </div><div class = "line3"><input type="password" name = "password" id="password" required></div><br><br>
+        <div class="line2">Re-Enter Password: </div><div class = "line3"><input type="password" name = "password1" id="password1" required></div><br><br>
+        <br>
+        <input type="submit" value ="Sign Up" STYLE="color: #FFFDD0; font-size: 15px; background-color: #B70003;  border: solid #B70003;"> &nbsp;&nbsp;&nbsp;&nbsp;
+        <input type = "reset" value ="Reset" STYLE="color: #FFFDD0; font-size: 15px; background-color: #B70003;  border: solid #B70003;"><br><br>
+        <a href="/office">Login</a><br>
+    </form>
+</div>
