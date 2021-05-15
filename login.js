@@ -63,11 +63,17 @@ module.exports.checkUser = function(){
                     resolve(data[0]);
                 }else{
                     reject("User not found");
-                }*/
+                }
                 
             });
         
         });
+        
+    })
+}
+
+module.exports.register = function(){
+    return new Promise(function(resolve,reject){
         
     })
 }

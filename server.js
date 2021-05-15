@@ -12,6 +12,7 @@ app.set('view engine', '.hbs');
 app.use(express.static(__dirname + '/public'));
 var lgn = require('./login');
 var clientSessions = require("client-sessions"); 
+var adm = require('./admission');
 
 // Setup client-sessions
 app.use(clientSessions({
@@ -92,7 +93,9 @@ app.get("/admission", (req, res) => {
 });
 //office for admission
 app.post("/admission", (req, res) => {
-    
+    amd.register(req.body).then(function(student){
+        res.redirect('/');
+    })
 });
 //Office page
 app.get("/office", (req, res) => {
@@ -101,28 +104,7 @@ app.get("/office", (req, res) => {
     });
 });
 
-app.get("/register", (req, res) => {
-    res.render('register', {
-        //data: someData,
-    });
-});
-
-app.post("/office",(req, res) => {
-    lgn.signup(req.body).then(function(user){
-        
-        res.redirect('/office');
-        
-        //res.send(user);
-    }).catch(function(err){
-        res.render('register', {
-            errorMessage: err
-        });
-    });
-//    res.send(req.body);
-});
-
 var usr;
-
 app.post("/office",(req, res) => {
     lgn.checkUser(req.body).then(function(user){
         req.userSession.user = {
@@ -140,6 +122,26 @@ app.post("/office",(req, res) => {
     });
 //    res.send(req.body);
 });
+
+app.get("/register", (req, res) => {
+    res.render('register', {
+        //data: someData,
+    });
+});
+
+app.post("/register",(req, res) => {
+    lgn.register(req.body).then(function(user){
+        res.redirect('/office');
+        
+    }).catch(function(err){
+        res.render('register', {
+            errorMessage: err
+        });
+    });
+//    res.send(req.body);
+});
+
+
 
 //Office page
 app.get("/workspace",ensureLogin, (req, res) => {

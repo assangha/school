@@ -134,6 +134,15 @@ form {
     width: 100px;
 }
 
+.line4 {
+  float: left;
+  width: 200px;
+}
+
+.frm2 {
+  width: 30%;
+}
+
 .line3 {
     float: right;
     width: 100px;
