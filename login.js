@@ -52,7 +52,7 @@ module.exports.checkUser = function(user){
         sequelize.sync().then(function () {
         
             login.findAll({ 
-                attributes: ['username'],
+                attributes: ['userName'],
                 where: {
                     username: user.userName
                 }
