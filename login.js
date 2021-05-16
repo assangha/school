@@ -54,7 +54,7 @@ module.exports.checkUser = function(user){
             login.findAll({ 
                 attributes: ['userName'],
                 where: {
-                    username: user.userName
+                    userName: user.userName
                 }
             }).then(function(data){
                 if(!data){
