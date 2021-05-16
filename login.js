@@ -24,9 +24,11 @@ var sequelize = new Sequelize('ddg3ugukfc8c9b', 'vvibxqicykceps', 'f5e9c8a0fd6ae
 });
 
 var login = sequelize.define('login', {
-    username: {
+    userName: {
         type: Sequelize.STRING,
     primaryKey: true},  // User Name
+    fullName: Sequelize.STRING,
+    email: Sequelize.STRING,
     passcode: Sequelize.STRING, // Passcode
 },{
     createdAt: false, // disable createdAt
@@ -45,35 +47,47 @@ module.exports.initialize = function(){
     })
 }
 
-module.exports.checkUser = function(){
+module.exports.checkUser = function(user){
     return new Promise(function(resolve,reject){
         sequelize.sync().then(function () {
         
             login.findAll({ 
                 attributes: ['username'],
                 where: {
-                    username: "gulbarg"
+                    username: user.userName
                 }
             }).then(function(data){
-                console.log("All first names where id == 2");
-                for(var i =0; i < data.length; i++){
-                    console.log(data[i].username);
-                }
                 if(!data){
-                    resolve(data[0]);
+                    if(data.passcode==user.password){
+                        resolve();
+                    }else{
+                        reject("Username or Password is incorredt");
+                    }
                 }else{
                     reject("User not found");
                 }
-                
             });
-        
         });
-        
     })
 }
 
-module.exports.register = function(){
+module.exports.register = function(user){
     return new Promise(function(resolve,reject){
-        
+        if(user.password===user.password1){
+            sequelize.sync().then(function () {
+                login.create({
+                    userName: user.userName,
+                    fullName: user.fullName,
+                    email: user.email,
+                    passcode: user.password
+                }).then(function (user) {
+                    resolve();
+                }).catch(function (error) {
+                    reject(error);
+                });
+            });
+        }else{
+            reject("Password does not match");
+        }
     })
 }

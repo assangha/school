@@ -104,13 +104,11 @@ app.get("/office", (req, res) => {
     });
 });
 
-var usr;
 app.post("/office",(req, res) => {
     lgn.checkUser(req.body).then(function(user){
         req.userSession.user = {
             userName: user.username,
         }
-        usr=user;
         res.redirect('/workspace');
         
         //res.send(user);
@@ -125,28 +123,24 @@ app.post("/office",(req, res) => {
 
 app.get("/register", (req, res) => {
     res.render('register', {
-        //data: someData,
+
     });
 });
 
 app.post("/register",(req, res) => {
     lgn.register(req.body).then(function(user){
         res.redirect('/office');
-        
     }).catch(function(err){
         res.render('register', {
             errorMessage: err
         });
     });
-//    res.send(req.body);
 });
-
-
 
 //Office page
 app.get("/workspace",ensureLogin, (req, res) => {
     res.render('work', {
-        data: usr,
+
     });
 });
 //page not found
