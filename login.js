@@ -73,7 +73,8 @@ module.exports.checkUser = function(user){
     })
 }
 
-module.exports.register = function(user){
+module.exports.register = function(user,code){
+
     return new Promise(function(resolve,reject){
         if(user.password===user.password1){
             sequelize.sync().then(function () {

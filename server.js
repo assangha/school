@@ -135,7 +135,8 @@ app.get("/register", (req, res) => {
 });
 
 app.post("/register",(req, res) => {
-    lgn.register(req.body).then(function(user){
+    var code=Math.floor(100000 + Math.random() * 900000);
+    lgn.register(req.body,code).then(function(user){
         res.redirect('/office');
     }).catch(function(err){
         res.render('register', {
