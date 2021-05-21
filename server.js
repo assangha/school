@@ -106,8 +106,9 @@ app.get("/office", (req, res) => {
 
 app.post("/office",(req, res) => {
     lgn.checkUser(req.body).then(function(user){
+        
         req.userSession.user = {
-            userName: user.username,
+            userName: user,
         }
         res.redirect('/workspace');
         

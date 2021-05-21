@@ -54,18 +54,16 @@ module.exports.checkUser = function(user){
             login.findAll({ 
                 attributes: ['userName'],
                 where: {
-                    userName: user.userName
+                    userName: user.userName,
+                    passcode: user.password
                 }
             }).then(function(data){
-                if(!data){
-                    if(data.passcode==user.password){
-                        resolve();
-                    }else{
-                        reject("Username or Password is incorredt");
-                    }
+                if(data!=null){
+                    resolve();
                 }else{
-                    reject("User not found");
+                    reject("User or password does not match");
                 }
+                //resolve(data);
             });
         });
     })
@@ -75,7 +73,7 @@ module.exports.register = function(user){
     return new Promise(function(resolve,reject){
         if(user.password===user.password1){
             sequelize.sync().then(function () {
-                login.create({
+               try{login.create({
                     userName: user.userName,
                     fullName: user.fullName,
                     email: user.email,
@@ -84,7 +82,7 @@ module.exports.register = function(user){
                     resolve();
                 }).catch(function (error) {
                     reject(error);
-                });
+                });}catch(err){reject(err)}
             });
         }else{
             reject("Password does not match");
