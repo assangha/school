@@ -106,13 +106,13 @@ app.get("/office", (req, res) => {
 
 app.post("/office",(req, res) => {
     lgn.checkUser(req.body).then(function(user){
-        /*
+        
         req.userSession.user = {
             userName: user,
         }
         res.redirect('/workspace');
-        */
-        res.json(user);
+        
+        //res.json(user);
     }).catch(function(err){
         res.render('office', {
             errorMessage: err, 
