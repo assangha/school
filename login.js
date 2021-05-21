@@ -58,13 +58,16 @@ module.exports.checkUser = function(user){
                     passcode: user.password
                 }
             }).then(function(data){
-                if(data!=null){
-                    resolve();
+                
+                if(data=="undefined"||data==null||data==""){
+                    reject("Username or password does not match");
                 }else{
-                    reject("User or password does not match");
+                    resolve(data);
                 }
-                //resolve(data);
+            }).catch(function(err) {
+                reject(err);
             });
+
         });
     })
 }
