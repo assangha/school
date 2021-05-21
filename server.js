@@ -13,7 +13,7 @@ app.use(express.static(__dirname + '/public'));
 var lgn = require('./login');
 var clientSessions = require("client-sessions"); 
 var adm = require('./admission');
-
+var usr;
 // Setup client-sessions
 app.use(clientSessions({
     cookieName: "userSession", // this is the object name that will be added to 'req'
@@ -112,15 +112,21 @@ app.post("/office",(req, res) => {
         }
         res.redirect('/workspace');
         
-        //res.json(user);
+        //res.send(usr);
     }).catch(function(err){
         res.render('office', {
             errorMessage: err, 
             userName: req.body.userName
         });
+        //console.log(err);
     });
 //    res.send(req.body);
 });
+
+app.get("/logout", function(req, res) {
+    req.userSession.reset();
+    res.redirect("/office");
+  });
 
 app.get("/register", (req, res) => {
     res.render('register', {

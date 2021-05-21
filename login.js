@@ -62,7 +62,8 @@ module.exports.checkUser = function(user){
                 if(data=="undefined"||data==null||data==""){
                     reject("Username or password does not match");
                 }else{
-                    resolve(data);
+                    var usr=data;
+                    resolve(usr[0].userName);
                 }
             }).catch(function(err) {
                 reject(err);
