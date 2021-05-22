@@ -13,7 +13,7 @@ app.use(express.static(__dirname + '/public'));
 var lgn = require('./login');
 var clientSessions = require("client-sessions"); 
 var adm = require('./admission');
-var usr;
+
 // Setup client-sessions
 app.use(clientSessions({
     cookieName: "userSession", // this is the object name that will be added to 'req'
@@ -135,8 +135,8 @@ app.get("/register", (req, res) => {
 });
 
 app.post("/register",(req, res) => {
-    var code=Math.floor(100000 + Math.random() * 900000);
-    lgn.register(req.body,code).then(function(user){
+    
+    lgn.register(req.body).then(function(user){
         res.redirect('/office');
     }).catch(function(err){
         res.render('register', {
