@@ -1,0 +1,51 @@
+<link rel="stylesheet" href="css/home.css">
+<div id="slider">  
+<div class="slides">  
+  <a href="/images"><img src="photos/staff/s1.jpg" width="100%" /></a>
+ </div>
+  
+  <div class="slides">  
+  <a href="/images"><img src="photos/premises/P1.jpg" width="100%" /></a>
+</div>
+  
+  <div class="slides">  
+  <a href="/images"><img src="photos/facilities/f01.jpg" width="100%" /></a>
+</div> 
+  
+
+</div>  
+  
+  <div id="dot"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+ 
+
+<script>
+    var index = 0;
+var slides = document.querySelectorAll(".slides");
+var dot = document.querySelectorAll(".dot");
+
+function changeSlide(){
+
+  if(index<0){
+    index = slides.length-1;
+  }
+  
+  if(index>slides.length-1){
+    index = 0;
+  }
+  
+  for(let i=0;i<slides.length;i++){
+    slides[i].style.display = "none";
+    dot[i].classList.remove("active");
+  }
+  
+  slides[index].style.display= "block";
+  dot[index].classList.add("active");
+  
+  index++;
+  
+  setTimeout(changeSlide,2000);
+  
+}
+
+changeSlide();
+</script>

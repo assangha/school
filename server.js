@@ -13,6 +13,8 @@ app.use(express.static(__dirname + '/public'));
 var lgn = require('./login');
 var clientSessions = require("client-sessions"); 
 var adm = require('./admission');
+var hm=require('./home');
+const fs = require('fs');
 
 // Setup client-sessions
 app.use(clientSessions({
@@ -32,6 +34,18 @@ function ensureLogin(req, res, next) {
       next();
     }
 }
+
+// Setup client-sessions
+app.use(clientSessions({
+    cookieName: "candidateSession", // this is the object name that will be added to 'req'
+    secret: "madebyabhaipalsangha", // this should be a long un-guessable string.
+    duration: 2 * 60 * 1000, // duration of the session in milliseconds (2 minutes)
+    activeDuration: 1000 * 60 * 1 // the session will be extended by this many ms each request (1 minute)
+  }));
+  app.use(function(req, res, next) {
+    res.locals.session = req.candidateSession;
+    next();
+});
 
 app.engine('.hbs', exphbs({ 
     extname: '.hbs',
@@ -62,7 +76,7 @@ const storage = multer.diskStorage({
       // in a large web service this would possibly cause a problem if two people
       // uploaded an image at the exact same time. A better way would be to use GUID's for filenames.
       // this is a simple example.
-      cb(null, Date.now() + path.extname(file.originalname));
+      cb(null, req.candidateSession.student + path.extname(file.originalname));
     }
 });
   
@@ -75,16 +89,73 @@ function onHttpStart(){
 }
 //home page
 app.get("/", (req, res) => {
-    res.render('home', {
-        //data: someData,
+    res.render('home1', {
+                                    
     });
 });
 //contact page
+app.get("/facilities", (req, res) => {
+    fs.readdir("./public/photos/facilities", function(err, items) {
+        res.render('facility', {
+            data: items
+        });
+    });
+});
+
+app.get("/premises", (req, res) => {
+    fs.readdir("./public/photos/premises", function(err, items) {
+        res.render('premises', {
+            data: items,
+        });
+    });
+});
+
+app.get("/staff", (req, res) => {
+    fs.readdir("./public/photos/staff", function(err, items) {
+        res.render('staff', {
+            data: items,
+        });
+    });
+});
+
 app.get("/contact", (req, res) => {
     res.render('contact', {
         //data: someData,
     });
 });
+
+app.get("/images", (req, res) => {
+    fs.readdir("./public/photos/facilities", function(err, items) {
+        if(err){
+            res.render('images', {
+                error: err 
+            });
+        }else{
+            fs.readdir("./public/photos/premises", function(err1, items1) {
+                if(err1){
+                    res.render('images', {
+                        error: err1 
+                    });
+                }else{
+                    fs.readdir("./public/photos/staff", function(err2, items2) {
+                        if(err2){
+                            res.render('images', {
+                                error: err2 
+                            });
+                        }else{
+                            res.render('images', {
+                                data: items,
+                                data1: items1,
+                                data2: items2
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    });
+});
+
 //admission page
 app.get("/admission", (req, res) => {
     res.render('admission', {
@@ -93,7 +164,10 @@ app.get("/admission", (req, res) => {
 });
 //office for admission
 app.post("/admission", (req, res) => {
-    amd.register(req.body).then(function(student){
+    adm.register(req.body).then(function(student){
+        req.candidateSession.student = {
+            student: student,
+        }
         res.redirect('/');
     })
 });
@@ -147,9 +221,21 @@ app.post("/register",(req, res) => {
 
 //Office page
 app.get("/workspace",ensureLogin, (req, res) => {
-    res.render('work', {
-        data: req.userSession.user
+    fs.readdir("./public/images/uploaded", function(err, items) {
+        if(err){
+            res.render('work', {
+                data: req.userSession.user,
+                err: err
+            });
+        }else{
+            res.render('work', {
+                data: req.userSession.user,
+                student: req.candidateSession.student,
+                img: items
+            });
+        }
     });
+    
 });
 //page not found
 app.use((req, res) => {
