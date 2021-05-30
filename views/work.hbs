@@ -1,9 +1,68 @@
-Hello {{data.userName}}
+<div class="mnu">
+<div class="dropdown">
+  <div class="dropbtn">{{data.userName}}</div>
+  <div class="dropdown-content">
+    <a href="#createuser">Create User</a>
+    <a href="#deleteuser">Delete User</a>
+    <a href="/logout">Sign Out</a>
+  </div>
+</div></div>
+<br><br>
+<div class="lightbox" id="createuser">
+    <figure>
+        <a href="#" class="close"></a>
+        <figcaption>
+            <h2>Sign Up</h2>
+
+            {{#if errorMessage}}
+                <div class="alert alert-danger">
+                    <strong>Error: </strong> {{errorMessage}}
+                </div>
+            {{/if}}
+            <div class ="frm2">
+            <form name="register" method ="post" action= "/register" autocomplete="on">
+                <br><br>
+                <div class="line4">Full name: </div><div class = "line3"><input type="text" name = "fullName" id="fullName" required></div><br><br>
+                <div class="line4">User Name: </div><div class = "line3"><input type="text" name = "userName" id="userName" required></div><br><br>
+                <div class="line4">Email: </div><div class = "line3"><input type="text" name = "email" id="email" required></div><br><br>
+                <div class="line4">Password: </div><div class = "line3"><input type="password" name = "password" id="password" required></div><br><br>
+                <div class="line4">Re-Enter Password: </div><div class = "line3"><input type="password" name = "password1" id="password1" required></div><br><br>
+                <br>
+                <input type="submit" value ="Sign Up" STYLE="color: #FFFDD0; font-size: 15px; background-color: #B70003;  border: solid #B70003;"> &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type = "reset" value ="Reset" STYLE="color: #FFFDD0; font-size: 15px; background-color: #B70003;  border: solid #B70003;"><br><br>
+                <a href="/office">Login</a><br>
+            </form>
+            </div>
+        </figcaption>
+    </figure>
+</div>
+<div class="lightbox" id="deleteuser">
+    <figure>
+        <a href="#" class="close"></a>
+        <figcaption>
+            <h2>Delete User</h2>
+
+            {{#if errorMessage}}
+                <div class="alert alert-danger">
+                    <strong>Error: </strong> {{errorMessage}}
+                </div>
+            {{/if}}
+            <div class ="frm1">
+            <form name="delete" method ="post" action= "/workspace" autocomplete="on">
+                <br><br>
+                <div class="line2">User Name: </div><div class = "line3"><input type="text" name = "userName" id="userName" {{#if userName}}value={{userName}}{{else}}value=""{{/if}} required></div><br><br>
+                <div class="line2">Password: </div><div class = "line3"><input type="password" name = "password" id="password" required></div><br><br>
+                <br>
+                <input type="submit" value ="Submit" STYLE="color: #FFFDD0; font-size: 15px; background-color: #B70003;  border: solid #B70003;"> &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type = "reset" value ="Reset" STYLE="color: #FFFDD0; font-size: 15px; background-color: #B70003;  border: solid #B70003;"><br><br>
+            </form>
+            </div>
+        </figcaption>
+    </figure>
+</div>
+<!--open files-->
 {{#if err}}
     <div class="alert alert-danger">
         <strong>Error: Cannot open files</strong>
     </div>
 {{/if}}
-<Br><br>
-<a href="/register">Sign up new User</a><br><br>
-<a href="/logout">Sign Out</a>
