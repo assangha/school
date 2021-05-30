@@ -73,7 +73,7 @@ module.exports.checkUser = function(user){
     })
 }
 
-module.exports.register = function(user,code){
+module.exports.register = function(user){
 
     return new Promise(function(resolve,reject){
         if(user.password===user.password1){
@@ -92,5 +92,38 @@ module.exports.register = function(user,code){
         }else{
             reject("Password does not match");
         }
+    })
+}
+
+module.exports.delete = function(user){
+    return new Promise(function(resolve,reject){
+        sequelize.sync().then(function () {
+            
+            login.findAll({ 
+                attributes: ['userName'],
+                where: {
+                    userName: user.userName,
+                    passcode: user.password
+                }
+            }).then(function(data){
+                
+                if(data=="undefined"||data==null||data==""){
+                    reject("Username or password does not match");
+                }else{
+                    login.destroy({
+                        where: { 
+                            userName: user.userName,
+                            passcode: user.password 
+                        }
+                    }).then(function () { 
+                        resolve("User "+user.userName+" deleted");
+                    }).catch(function(err) {
+                        reject(err);
+                    });
+                }
+            }).catch(function(err) {
+                reject(err);
+            });
+        });
     })
 }

@@ -15,6 +15,7 @@ var clientSessions = require("client-sessions");
 var adm = require('./admission');
 var hm=require('./home');
 const fs = require('fs');
+let alert = require('alert');
 
 // Setup client-sessions
 app.use(clientSessions({
@@ -202,20 +203,25 @@ app.get("/logout", function(req, res) {
     res.redirect("/office");
   });
 
-app.get("/register", (req, res) => {
-    res.render('register', {
-
-    });
-});
-
 app.post("/register",(req, res) => {
     
     lgn.register(req.body).then(function(user){
         res.redirect('/office');
     }).catch(function(err){
-        res.render('register', {
+        res.render('work', {
             errorMessage: err
         });
+    });
+});
+
+app.post("/delete",(req, res) => {
+    
+    lgn.delete(req.body).then(function(user){
+        alert(user);
+        res.redirect('/workspace');
+    }).catch(function(err){
+        alert(err);
+        res.redirect('/workspace');
     });
 });
 
