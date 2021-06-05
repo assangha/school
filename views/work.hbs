@@ -55,6 +55,23 @@
 {{/if}}
 {{#if err}}
     <div class="alert alert-danger">
-        <strong>Error: Cannot open files</strong>
+        <strong>Error:</strong>{{err}}
     </div>
 {{/if}}
+<table>
+    <th>
+        <tr>
+            <td>Names</td>
+        </tr>
+    </th>
+{{#each name}}
+    <tr>
+        <td>{{this}}</td>
+    </tr>
+{{else}}
+        <tr>
+        <td colspan="4">No Data Available</td>
+    </tr>
+{{/each}}
+</table>
+

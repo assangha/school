@@ -1,9 +1,14 @@
 <h2>Admission Form</h2>
+{{#if errorMessage}}
+    <div class="alert alert-danger">
+        <strong>Error: </strong> {{errorMessage}}
+    </div>
+{{/if}}
 <div class ="frm">
-    <form name="admission" method ="post" action= "admission" autocomplete="on" enctype="multipart/form-data">
+    <form name="admission" method ="post" action= "/admission" autocomplete="on" enctype="multipart/form-data">
     <br>
         <b>General Information</b><br><br>
-            <div class="line">Name: </div><div class = "line1"><input type="text" name = "name" id="name" required></div><br><br>
+            <div class="line">Student Name: </div><div class = "line1"><input type="text" name = "name" id="name" required></div><br><br>
             <div class="line">Father Name: </div><div class = "line1"><input type="text" name = "Father_name" id="father_name" required></div><br><br>
             <div class="line">Mother Name: </div><div class = "line1"><input type="text" name = "Mother_name" id="Mother_name" required></div><br><br>
             <div class="line">Date of Birth: </div><div class = "line1"><input type="date" name = "DOB" id="DOB" required></div><br><br>
@@ -22,9 +27,9 @@
                 <option value="OBC">OBC</option>
                 <option value="GEN">GEN</option>
             </select></div><br><br>
-            <div class="line">Adhaar Number: </div><div class = "line1"><input type="text" name = "Adhaar" id="Adhaar" required></div><br><br>
+            <div class="line">Adhaar Number: </div><div class = "line1"><input type="text" name = "Adhaar" id="Adhaar" pattern="[0-9]+" required></div><br><br>
             <div class="line">Address: </div><div class = "line1"><input type="text" name = "Address" id="Address" required></div><br><br>
-            <div class="line">Mobile No.: </div><div class = "line1"><input type="text" name = "Mobile" id="Mobile" required></div><br><br>
+            <div class="line">Mobile No.: </div><div class = "line1"><input type="text" name = "Mobile" id="Mobile" pattern="[0-9]+" required></div><br><br>
             <div class="line">Email: </div><div class = "line1"><input type="text" name = "Email" id="Email" required></div><br><br>
             <div class="line">Previous Class: </div><div class = "line1"><input type="text" name = "Previous_Class" id="Previous_Class" required></div><br><br>
             <div class="line">Previous School: </div><div class = "line1"><input type="text" name = "Previous_School" id="Previous_School" required></div><br><br>
@@ -47,10 +52,10 @@
                 <option value="N/A" selected >N/A</option>
             </select></div><br><br>
         <b>Siblings Studying in this School</b><br>(Write N/A if none)<br><br>
-            <div class="line">Name: </div><div class = "line1"><input type="text" name = "Sibling_name" id="Sibling_name" required></div><br><br>
-            <div class="line">Class: </div><div class = "line1"><input type="text" name = "Sibling_class" id="Sibling_class" required></div><br><br>
+            <div class="line">Name: </div><div class = "line1"><input type="text" name = "Sibling_name" id="Sibling_name" value="N/A" required></div><br><br>
+            <div class="line">Class: </div><div class = "line1"><input type="text" name = "Sibling_class" id="Sibling_class" value="N/A" required></div><br><br>
         <b>Banking Details</b><br><br>
-            <div class="line">Account Number: </div><div class = "line1"><input type="text" name = "account_number" id="account_number" required></div><br><br>
+            <div class="line">Account Number: </div><div class = "line1"><input type="text" name = "account_number" id="account_number" pattern="[0-9]+" required></div><br><br>
             <div class="line">Full Name of Account Holder: </div><div class = "line1"><input type="text" name = "account_name" id="account_name" required></div><br><br><br>
             <div class="line">Bank Name: </div><div class = "line1"><input type="text" name = "Bank_name" id="Bank_name" required></div><br><br>
             <div class="line">Branch name: </div><div class = "line1"><input type="text" name = "Branch_name" id="Branch_name" required></div><br><br>

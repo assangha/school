@@ -3,17 +3,16 @@ var express = require("express");
 var app = express();
 var path = require("path");
 const multer = require("multer");
-app.use(express.static('public'));
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 const exphbs = require('express-handlebars');
 app.engine('.hbs', exphbs({ extname: '.hbs' }));
 app.set('view engine', '.hbs');
+app.use(express.static('public'));
 app.use(express.static(__dirname + '/public'));
 var lgn = require('./login');
 var clientSessions = require("client-sessions"); 
 var adm = require('./admission');
-var hm=require('./home');
 const fs = require('fs');
 let alert = require('alert');
 
@@ -21,8 +20,8 @@ let alert = require('alert');
 app.use(clientSessions({
     cookieName: "userSession", // this is the object name that will be added to 'req'
     secret: "madebyabhaipalsangha", // this should be a long un-guessable string.
-    duration: 2 * 60 * 1000, // duration of the session in milliseconds (2 minutes)
-    activeDuration: 1000 * 60 * 1 // the session will be extended by this many ms each request (1 minute)
+    duration: 5 * 60 * 1000, // duration of the session in milliseconds (2 minutes)
+    activeDuration: 1000 * 60 * 5 // the session will be extended by this many ms each request (1 minute)
   }));
   app.use(function(req, res, next) {
     res.locals.session = req.userSession;
@@ -40,8 +39,8 @@ function ensureLogin(req, res, next) {
 app.use(clientSessions({
     cookieName: "candidateSession", // this is the object name that will be added to 'req'
     secret: "madebyabhaipalsangha", // this should be a long un-guessable string.
-    duration: 2 * 60 * 1000, // duration of the session in milliseconds (2 minutes)
-    activeDuration: 1000 * 60 * 1 // the session will be extended by this many ms each request (1 minute)
+    duration: 60 * 60 * 1000, // duration of the session in milliseconds (2 minutes)
+    activeDuration: 1000 * 60 * 60 // the session will be extended by this many ms each request (1 minute)
   }));
   app.use(function(req, res, next) {
     res.locals.session = req.candidateSession;
@@ -73,16 +72,12 @@ app.set('view engine', '.hbs');
 const storage = multer.diskStorage({
     destination: "./public/photos/uploaded",
     filename: function (req, file, cb) {
-      // we write the filename as the current date down to the millisecond
-      // in a large web service this would possibly cause a problem if two people
-      // uploaded an image at the exact same time. A better way would be to use GUID's for filenames.
-      // this is a simple example.
-      cb(null, req.candidateSession.student + path.extname(file.originalname));
+      cb(null, req.candidateSession.student +"_"+req.file.fieldname+ path.extname(file.originalname));
     }
 });
   
   // tell multer to use the diskStorage function for naming files instead of the default.
-const upload = multer({ storage: storage });
+const upload = multer({ storage: storage }).array('candidate_documents',8);
 // setup a 'home' to listen on the default url path
 //listening to server
 function onHttpStart(){
@@ -94,6 +89,37 @@ app.get("/", (req, res) => {
                                     
     });
 });
+
+//admission page
+app.get("/admission", (req, res) => {
+    res.render('admission', {
+        //data: someData,
+    });
+});
+//office for admission
+app.post("/admission", (req, res) => {
+    upload(req,res,function(err) {
+        if(err) {
+            return res.end("Error uploading file.");
+        }
+        res.send(req.files);
+        res.send(req.body);
+    });
+    
+    /*
+    adm.register(req.body).then(function(student){
+        req.candidateSession.student = {
+            student: student,
+        }
+        res.redirect('/');
+    }).catch(function(err){
+        res.render('admission', {
+            errorMessage: err
+        });
+    });*/
+    res.json(req.body);
+});
+
 //contact page
 app.get("/facilities", (req, res) => {
     fs.readdir("./public/photos/facilities", function(err, items) {
@@ -157,21 +183,7 @@ app.get("/images", (req, res) => {
     });
 });
 
-//admission page
-app.get("/admission", (req, res) => {
-    res.render('admission', {
-        //data: someData,
-    });
-});
-//office for admission
-app.post("/admission", (req, res) => {
-    adm.register(req.body).then(function(student){
-        req.candidateSession.student = {
-            student: student,
-        }
-        res.redirect('/');
-    })
-});
+
 //Office page
 app.get("/office", (req, res) => {
     res.render('office', {
@@ -231,13 +243,21 @@ app.get("/workspace",ensureLogin, (req, res) => {
         if(err){
             res.render('work', {
                 data: req.userSession.user,
-                err: err
+                err: "Cannot Open Files"
             });
         }else{
-            res.render('work', {
-                data: req.userSession.user,
-                student: req.candidateSession.student,
-                img: items
+            adm.getstudents().then(function(name){
+                res.render('work', {
+                    data: req.userSession.user,
+                    img: items,
+                    name: name
+                });    
+            }).catch(function(err){
+                res.render('work', {
+                    data: req.userSession.user,
+                    img: items,
+                    err: err
+                });
             });
         }
     });
